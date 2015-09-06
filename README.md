@@ -16,6 +16,7 @@ I have 2 ```Service``` classes. One is for without Spring Data JPA, the other is
 ## How to run
 1. Set profile "without-datajpa" into application.yml
 1. Run main method in ```Application```
+1. Access http://localhost:8080/rooms
 1. Confirm JPA mode at the bottom of web pages. It might show ```RoomServiceImpl```.
 
 # JPA with using Spring Data JPA
@@ -27,4 +28,5 @@ But I dare to have configuration code for Spring Data JPA for learning its mecha
 ## How to run
 1. Set profile empty or anything other than "without-datajpa" into application.yml
 1. Run main method in ```Application```
+1. Access http://localhost:8080/rooms
 1. Confirm JPA mode at the bottom of web pages. It might show ```RoomServiceJpaImpl```.
