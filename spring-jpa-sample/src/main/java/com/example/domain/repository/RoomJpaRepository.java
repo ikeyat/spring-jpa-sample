@@ -9,6 +9,5 @@ import java.util.List;
 /**
  * Created by ikeya on 15/09/06.
  */
-@Repository
 public interface RoomJpaRepository extends JpaRepository<Room, Integer> {
 }
