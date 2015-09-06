@@ -1,0 +1,19 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Room Detail</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<h1>Room Detail</h1>
+<table border="1">
+    <tr><td>id</td><td th:text="${room.id}">123</td></tr>
+    <tr><td>name</td><td th:text="${room.name}">hoge</td></tr>
+    <tr><td>capacity</td><td th:text="${room.capacity}">10</td></tr>
+</table>
+<a th:href="@{/rooms/{id}/delete(id=${room.id})}">delete this</a>
+
+<h1>JPA Mode</h1>
+<p th:text="${jpaMode}" />
+</body>
+</html>

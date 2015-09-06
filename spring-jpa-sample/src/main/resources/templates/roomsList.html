@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Rooms List</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<h1>Room List</h1>
+<table border="1">
+    <tr>
+        <th>no</th>
+        <th>id</th>
+        <th>name</th>
+        <th>capacity</th>
+        <th>link</th>
+    </tr>
+    <tr th:each="room, iterationStatus : ${rooms}">
+        <td th:text="${iterationStatus.count}">1</td>
+        <td th:text="${room.id}">1</td>
+        <td th:text="${room.name}">hoge</td>
+        <td th:text="${room.capacity}">10</td>
+        <td><a th:href="@{/rooms/{id}(id=${room.id})}">Detail</a></td>
+    </tr>
+</table>
+
+<h1>Create Room</h1>
+<form th:action="@{/rooms}" th:object="${roomForm}" method="post">
+    <ul>
+        <li>
+            <label th:for="${#ids.next('name')}">name</label>
+            <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" />
+            <input type="text" th:field="*{name}" />
+        </li>
+        <li>
+            <label th:for="${#ids.next('capacity')}">capacity</label>
+            <p th:if="${#fields.hasErrors('capacity')}" th:errors="*{capacity}" />
+            <input type="text" th:field="*{capacity}" />
+        </li>
+    </ul>
+    <input type="submit" />
+</form>
+<h1>JPA Mode</h1>
+<p th:text="${jpaMode}" />
+</body>
+</html>
