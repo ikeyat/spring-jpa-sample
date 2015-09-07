@@ -1,14 +1,14 @@
 package com.example.domain.service;
 
-import com.example.domain.model.Room;
-import com.example.domain.repository.RoomRepository;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collection;
-import java.util.List;
+import com.example.domain.model.Room;
+import com.example.domain.repository.RoomRepository;
 
 /**
  * Created by ikeya on 15/09/06.
@@ -22,14 +22,14 @@ public class RoomServiceImpl implements RoomService {
     @Override
     @Transactional(readOnly = true)
     public Room getRoom(Integer id) {
-        Room room = roomRepository.findOne(id);
+        Room room = roomRepository.find(id);
         return room;
     }
 
     @Override
     @Transactional
     public void createRoom(Room room) {
-        roomRepository.save(room);
+        roomRepository.persist(room);
     }
 
     @Override
@@ -43,6 +43,6 @@ public class RoomServiceImpl implements RoomService {
     @Transactional
     public void deleteRoom(Integer id) {
         Room room = getRoom(id);
-        roomRepository.delete(room);
+        roomRepository.remove(room);
     }
 }
