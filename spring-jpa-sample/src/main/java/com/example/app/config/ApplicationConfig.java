@@ -1,5 +1,12 @@
 package com.example.app.config;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.persistence.EntityManager;
+import javax.sql.DataSource;
+
+import org.hibernate.engine.transaction.jta.platform.internal.WeblogicJtaPlatform;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -12,14 +19,11 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import javax.persistence.EntityManager;
-import javax.sql.DataSource;
-
 /**
  * Created by ikeya on 15/09/06.
  */
 @ComponentScan(basePackages = "com.example.domain")
-@EnableTransactionManagement(proxyTargetClass=true)
+@EnableTransactionManagement
 @EnableJpaRepositories("com.example.domain.repository")
 @Configuration
 public class ApplicationConfig {
@@ -28,8 +32,7 @@ public class ApplicationConfig {
     DataSource dataSource;
 
     @Bean
-    public LocalContainerEntityManagerFactoryBean entityManagerFactory()
-    {
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         vendorAdapter.setGenerateDdl(true);
         vendorAdapter.setDatabase(Database.H2);
@@ -39,20 +42,24 @@ public class ApplicationConfig {
         factory.setDataSource(dataSource);
         factory.setJpaVendorAdapter(vendorAdapter);
         factory.setPackagesToScan("com.example.domain.model");
+
+        Map<String, String> propertyMap = new HashMap<>();
+        propertyMap.put("hibernate.transaction.jta.platform",
+                WeblogicJtaPlatform.class.getName());
+        factory.setJpaPropertyMap(propertyMap);
         return factory;
     }
 
     @Bean
-    public EntityManager entityManager()
-    {
+    public EntityManager entityManager() {
         return entityManagerFactory().getObject().createEntityManager();
     }
 
     @Bean
-    public PlatformTransactionManager transactionManager()
-    {
+    public PlatformTransactionManager transactionManager() {
         JpaTransactionManager jpaTransactionManager = new JpaTransactionManager();
-        jpaTransactionManager.setEntityManagerFactory(entityManagerFactory().getObject());
+        jpaTransactionManager.setEntityManagerFactory(entityManagerFactory()
+                .getObject());
         return jpaTransactionManager;
     }
 }

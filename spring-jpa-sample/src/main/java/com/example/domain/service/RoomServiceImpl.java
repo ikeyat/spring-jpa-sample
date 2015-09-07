@@ -38,11 +38,10 @@ public class RoomServiceImpl implements RoomService {
         return roomRepository.findAll();
     }
 
-
     @Override
     @Transactional
     public void deleteRoom(Integer id) {
-        Room room = getRoom(id);
+        Room room = roomRepository.find(id);
         roomRepository.remove(room);
     }
 }
