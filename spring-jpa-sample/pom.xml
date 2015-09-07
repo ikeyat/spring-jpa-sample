@@ -54,12 +54,15 @@
 
     <build>
         <finalName>spring-jpa-sample</finalName>
-        <!--<plugins>
+        <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>com.example.app.config.Application</mainClass>
+                </configuration>
             </plugin>
-        </plugins>-->
+        </plugins>
     </build>
 
 </project>
