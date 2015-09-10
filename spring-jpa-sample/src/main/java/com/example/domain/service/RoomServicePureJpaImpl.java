@@ -1,6 +1,7 @@
 package com.example.domain.service;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.LockModeType;
@@ -10,6 +11,7 @@ import javax.persistence.TypedQuery;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.domain.model.Equipment;
 import com.example.domain.model.Room;
 
 @Service
@@ -38,13 +40,13 @@ public class RoomServicePureJpaImpl {
     @Transactional
     public void updateRoom(Integer id, String name, Integer capacity) {
         Room room = entityManager.find(Room.class, id);
-        room.setName(name);
+        room.setRoomName(name);
         room.setCapacity(capacity);
     }
     
     @Transactional
     public void updateRoom(Room room) {
-        if (room.getId() == null) {
+        if (room.getRoomId() == null) {
             // 不正な入力なので例外発生（略）
         }
         entityManager.merge(room);
@@ -61,4 +63,17 @@ public class RoomServicePureJpaImpl {
         Room room = entityManager.find(Room.class, id);
         entityManager.lock(room, LockModeType.OPTIMISTIC); // OptimisticLockExceptionが発生
     }
+    
+    @Transactional(readOnly = true)
+    public Set<Equipment> getEquipmentsInRoom(Integer roomId) {
+        Room room = entityManager.find(Room.class, roomId);
+        return room.getEquipments();
+    }
+    
+    @Transactional(readOnly = true)
+    public Room getRoomOfEquipment(Integer equipmentId) {
+        Equipment equipment = entityManager.find(Equipment.class, equipmentId);
+        return equipment.getRoom();
+    }
+    
 }

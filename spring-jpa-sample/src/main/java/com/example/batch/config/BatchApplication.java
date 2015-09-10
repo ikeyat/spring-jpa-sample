@@ -16,18 +16,18 @@ public class BatchApplication {
         RoomService roomService = context.getBean(RoomService.class);
 
         Room room1 = new Room();
-        room1.setName("Hoge Room");
+        room1.setRoomName("Hoge Room");
         room1.setCapacity(120);
 
         Room room2 = new Room();
-        room2.setName("Fuga Room");
+        room2.setRoomName("Fuga Room");
         room2.setCapacity(30);
 
         roomService.createRoom(room1);
         roomService.createRoom(room2);
 
 
-        Room targetRoom = roomService.getRoom(room1.getId());
+        Room targetRoom = roomService.getRoom(room1.getRoomId());
         System.out.println(ReflectionToStringBuilder.toString(targetRoom));
     }
 

@@ -16,10 +16,10 @@
     </tr>
     <tr th:each="room, iterationStatus : ${rooms}">
         <td th:text="${iterationStatus.count}">1</td>
-        <td th:text="${room.id}">1</td>
-        <td th:text="${room.name}">hoge</td>
+        <td th:text="${room.roomId}">1</td>
+        <td th:text="${room.roomName}">hoge</td>
         <td th:text="${room.capacity}">10</td>
-        <td><a th:href="@{/rooms/{id}(id=${room.id})}">Detail</a></td>
+        <td><a th:href="@{/rooms/{id}(id=${room.roomId})}">Detail</a></td>
     </tr>
 </table>
 

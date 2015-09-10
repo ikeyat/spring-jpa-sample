@@ -7,11 +7,18 @@
 <body>
 <h1>Room Detail</h1>
 <table border="1">
-    <tr><td>id</td><td th:text="${room.id}">123</td></tr>
-    <tr><td>name</td><td th:text="${room.name}">hoge</td></tr>
+    <tr><td>id</td><td th:text="${room.roomId}">123</td></tr>
+    <tr><td>name</td><td th:text="${room.roomName}">hoge</td></tr>
     <tr><td>capacity</td><td th:text="${room.capacity}">10</td></tr>
+    <tr><td>equipments</td>
+        <td>
+            <ul th:each="equipment, iterationStatus : ${room.equipments}">
+		        <li th:text="${equipment}">equipmentA</li>
+            </ul>
+        </td>
+    </tr>
 </table>
-<a th:href="@{/rooms/{id}/delete(id=${room.id})}">delete this</a>
+<a th:href="@{/rooms/{id}/delete(id=${room.roomId})}">delete this</a>
 
 <h1>JPA Mode</h1>
 <p th:text="${jpaMode}" />

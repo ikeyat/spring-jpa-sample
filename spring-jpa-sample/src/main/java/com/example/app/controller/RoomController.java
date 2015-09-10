@@ -56,7 +56,7 @@ public class RoomController {
             return getRoomsAll(model);
         }
         Room room = new Room();
-        room.setName(form.getName());
+        room.setRoomName(form.getName());
         room.setCapacity(form.getCapacity());
         roomService.createRoom(room);
         return "redirect: /rooms";

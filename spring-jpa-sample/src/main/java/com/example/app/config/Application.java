@@ -24,11 +24,11 @@ public class Application implements CommandLineRunner {
     @Transactional
     public void run(String... strings) throws Exception {
         Room room1 = new Room();
-        room1.setName("Hoge Room");
+        room1.setRoomName("Hoge Room");
         room1.setCapacity(120);
 
         Room room2 = new Room();
-        room2.setName("Fuga Room");
+        room2.setRoomName("Fuga Room");
         room2.setCapacity(30);
 
         roomRepository.persist(room1);
