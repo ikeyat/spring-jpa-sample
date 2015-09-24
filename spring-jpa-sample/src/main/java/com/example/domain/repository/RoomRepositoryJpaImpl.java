@@ -28,6 +28,7 @@ public class RoomRepositoryJpaImpl implements RoomRepository {
     @Override
     public void persist(Room room) {
         entityManager.persist(room);
+        entityManager.flush();
     }
     
     @Override

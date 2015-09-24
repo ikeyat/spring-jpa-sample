@@ -13,7 +13,7 @@
     <tr><td>equipments</td>
         <td>
             <ul th:each="equipment, iterationStatus : ${room.equipments}">
-		        <li th:text="${equipment}">equipmentA</li>
+		        <li th:text="${equipment.equipmentName}"><a th:href="@{/equipments/{id}(id=${equipment.equipmentId})}">equipmentA</a></li>
             </ul>
         </td>
     </tr>
