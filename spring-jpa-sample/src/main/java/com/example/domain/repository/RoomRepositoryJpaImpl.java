@@ -8,6 +8,7 @@ import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Repository;
 
+import com.example.domain.model.Equipment;
 import com.example.domain.model.Room;
 
 /**

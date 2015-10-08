@@ -17,6 +17,10 @@
             </ul>
         </td>
     </tr>
+    <tr><td>createdBy</td><td th:text="${room.createdBy}">John</td></tr>
+    <tr><td>createdDate</td><td th:text="${room.createdDate}">2015/8/1</td></tr>
+    <tr><td>lastModifiedBy</td><td th:text="${room.lastModifiedBy}">John</td></tr>
+    <tr><td>lastModifiedDate</td><td th:text="${room.lastModifiedDate}">2015/8/1</td></tr>
 </table>
 <a th:href="@{/rooms/{id}/delete(id=${room.roomId})}">delete this</a>
 

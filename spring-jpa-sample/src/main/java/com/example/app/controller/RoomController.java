@@ -1,25 +1,41 @@
 package com.example.app.controller;
 
-import com.example.domain.model.Room;
-import com.example.domain.service.RoomService;
+import java.util.Collection;
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpMethod;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.Collection;
+import com.example.domain.model.Room;
+import com.example.domain.service.RoomService;
 
 /**
  * Created by ikeya on 15/09/06.
  */
 @Controller
+@Slf4j
 public class RoomController {
+    @PersistenceContext
+    EntityManager em;
+    
     @Autowired
     private RoomService roomService;
-
+    
     @ModelAttribute
     public RoomForm setUpRoomForm() {
         return new RoomForm();
@@ -43,7 +59,21 @@ public class RoomController {
         model.addAttribute("rooms", rooms);
         return "/roomsList";
     }
-
+    
+    @RequestMapping(value = "/rooms", method = RequestMethod.GET, params = {"paging"})
+    public String getRoomsAll(Model model, Pageable pageable) {
+        Page<Room> rooms = roomService.getRoomsAll(pageable);
+        model.addAttribute("rooms", rooms);
+        return "/roomsList";
+    }
+    
+    @RequestMapping(value = "/rooms", method = RequestMethod.GET, params = {"paging-manual"})
+    public String getRoomsByRoomNameAsc(Model model, @RequestParam("paging-manual") int page) {
+        List<Room> rooms = roomService.getRoomsAll(page, 3);
+        model.addAttribute("rooms", rooms);
+        return "/roomsList";
+    }
+    
     @RequestMapping(value = "/rooms/{id}/delete")
     public String deleteRoom(@PathVariable("id") Integer id) {
         roomService.deleteRoom(id);

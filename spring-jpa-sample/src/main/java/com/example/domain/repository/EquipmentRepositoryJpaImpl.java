@@ -3,6 +3,7 @@ package com.example.domain.repository;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.LockModeType;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
@@ -21,7 +22,7 @@ public class EquipmentRepositoryJpaImpl implements EquipmentRepository {
 
     @Override
     public Equipment find(Integer id) {
-        Equipment equipment = entityManager.find(Equipment.class, id);
+        Equipment equipment = entityManager.find(Equipment.class, id, LockModeType.PESSIMISTIC_WRITE);
         return equipment;
     }
 

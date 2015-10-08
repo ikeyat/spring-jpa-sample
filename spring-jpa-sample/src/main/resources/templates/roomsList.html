@@ -12,6 +12,7 @@
         <th>id</th>
         <th>name</th>
         <th>capacity</th>
+        <th>equipments</th>
         <th>link</th>
     </tr>
     <tr th:each="room, iterationStatus : ${rooms}">
@@ -19,6 +20,11 @@
         <td th:text="${room.roomId}">1</td>
         <td th:text="${room.roomName}">hoge</td>
         <td th:text="${room.capacity}">10</td>
+        <td>
+            <ul th:each="equipment, iterationStatus : ${room.equipments}">
+                <li th:text="${equipment.equipmentName}"><a th:href="@{/equipments/{id}(id=${equipment.equipmentId})}">equipmentA</a></li>
+            </ul>
+        </td>
         <td><a th:href="@{/rooms/{id}(id=${room.roomId})}">Detail</a></td>
     </tr>
 </table>
