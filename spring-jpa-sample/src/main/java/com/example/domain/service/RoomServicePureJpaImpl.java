@@ -73,6 +73,12 @@ public class RoomServicePureJpaImpl {
         room.setCapacity(capacity);
     }
 
+    @Transactional
+    public void updateAndFlushRoomWithOptimisticLock(Integer id, String name, Integer capacity) {
+        updateRoomWithOptimisticLock(id, name, capacity);
+        entityManager.flush();
+    }
+
     @Transactional(readOnly = true)
     public Set<Equipment> getEquipmentsInRoom(Integer roomId) {
         Room room = entityManager.find(Room.class, roomId);

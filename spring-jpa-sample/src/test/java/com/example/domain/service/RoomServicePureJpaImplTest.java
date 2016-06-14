@@ -11,6 +11,7 @@ import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import javax.persistence.OptimisticLockException;
 import java.util.concurrent.*;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
@@ -51,6 +52,46 @@ public class RoomServicePureJpaImplTest {
                 } catch (Exception e) {
                     e.printStackTrace();
                     assertThat(e, instanceOf(ObjectOptimisticLockingFailureException.class));
+                    assertThat(e.getCause(), instanceOf(StaleObjectStateException.class));
+                }
+            }
+        });
+        Future<?> f2 = executor.submit(new Runnable() {
+            @Override
+            public void run() {
+                Room room = roomService.getRoom(room1.getRoomId());
+                room.setRoomName("hoge");
+                roomService.updateRoom(room);
+            }
+        });
+        f1.get();
+        f2.get();
+    }
+
+    @Test
+    public void testOptimisticLockWithFlush() throws InterruptedException, ExecutionException {
+        final Room room1 = new Room();
+        room1.setRoomName("Hoge Room");
+        room1.setCapacity(120);
+
+        final Room room2 = new Room();
+        room2.setRoomName("Fuga Room");
+        room2.setCapacity(30);
+
+        roomService.createRoom(room1);
+        roomService.createRoom(room2);
+
+
+        ExecutorService executor = Executors.newFixedThreadPool(10);
+        Future<?> f1 = executor.submit(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    roomService.updateAndFlushRoomWithOptimisticLock(room1.getRoomId(),
+                            "Hoge Room Modified by thread 1", 0);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    assertThat(e, instanceOf(OptimisticLockException.class));
                     assertThat(e.getCause(), instanceOf(StaleObjectStateException.class));
                 }
             }
