@@ -3,13 +3,7 @@ package com.example.domain.model;
 import java.io.Serializable;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import lombok.Data;
 
@@ -35,6 +29,10 @@ public class Room implements Serializable {
     // @OneToMany
     // @JoinColumn(name = "room_id_fk")
     private Set<Equipment> equipments;
+
+    @Version
+    @Column(name = "room_version")
+    private Integer roomVersion;
 
     @Override
     public boolean equals(Object o) {

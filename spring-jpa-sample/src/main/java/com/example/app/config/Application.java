@@ -1,20 +1,15 @@
 package com.example.app.config;
 
-import java.util.Set;
-
+import com.example.domain.model.Equipment;
+import com.example.domain.model.Room;
+import com.example.domain.repository.RoomRepository;
 import lombok.extern.slf4j.Slf4j;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.transaction.annotation.Transactional;
-
-import com.example.domain.model.Equipment;
-import com.example.domain.model.Room;
-import com.example.domain.repository.EquipmentRepository;
-import com.example.domain.repository.RoomRepository;
 
 /**
  * Created by ikeya on 15/09/06.
@@ -27,8 +22,8 @@ public class Application implements CommandLineRunner {
     @Autowired
     RoomRepository      roomRepository;
 
-    @Autowired
-    EquipmentRepository equipmentRepository;
+//    @Autowired
+//    EquipmentRepository equipmentRepository;
 
     @Override
     @Transactional
@@ -59,9 +54,9 @@ public class Application implements CommandLineRunner {
         roomRepository.persist(room1);
         roomRepository.persist(room2);
         
-        equipmentRepository.persist(equipment1);
-        equipmentRepository.persist(equipment2);
-        equipmentRepository.persist(equipment3);
+//        equipmentRepository.persist(equipment1);
+//        equipmentRepository.persist(equipment2);
+//        equipmentRepository.persist(equipment3);
 
 //        Set<Equipment> equipmentsRoom1 = room1.getEquipments();
 //        for (Equipment equipment : equipmentsRoom1) {
